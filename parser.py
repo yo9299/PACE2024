@@ -1,12 +1,12 @@
 import networkx as nx
 from networkx.algorithms import bipartite
 import os 
-import glob 
 
-mypath = os.listdir("/home/vardevol/git/python")
+mypath = os.listdir("/home/vardevol/git/python/PACE2024/test/")
+test_dir = "/home/vardevol/git/python/PACE2024/test/"
 
 def parser(filename):
-    input_graph = open(filename, 'r')
+    input_graph = open(test_dir + filename, 'r')
     lines = input_graph.readlines()
     input_graph.close()
     lines = [line.rstrip() for line in lines] 
@@ -25,11 +25,11 @@ def parser(filename):
     
 def create_graph(filename):
     n_a, n_b, n_edges, edges = parser(filename)
-    G = nx.Graph()
+    G = nx.DiGraph()
     G.add_nodes_from(list(dict.fromkeys([ed[0] for ed in edges])), bipartite = 0)
-    G.add_nodes_from(list(dict.fromkeys([ed[0] for ed in edges])), bipartite=1)
+    G.add_nodes_from(list(dict.fromkeys([ed[1] for ed in edges])), bipartite=1)
     G.add_edges_from(edges)
-    return G
+    return G, list(dict.fromkeys([ed[0] for ed in edges])),list(dict.fromkeys([ed[1] for ed in edges]))
 
 def create_dataset(path):
     files = [f for f in mypath ]
