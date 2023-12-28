@@ -12,15 +12,15 @@ import sys
 import classes as c
 import crossings as cr
 
-#sys. setrecursionlimit(64)
+sys. setrecursionlimit(100000)
 
 
 def solve(filename, output):
     g, ordera, orderb = parse.create_graph(filename)
     g = c.Bipartite_graph(g, ordera, orderb)
     n = c.Node(g, cond.initialize_D(g))
-    sol = dfs([n])
-    return list(nx.topological_sort(sol.digraph))
+    sol, m = dfs_opt([n], [], 100000)
+    return sol, m#list(nx.topological_sort(sol.digraph)) #sol
     #parse.write_solution(output, sol)
     
 
@@ -89,11 +89,13 @@ def dfs(list_nodes):
             sol = dfs(expand(n)+list_nodes[1:])
     return sol
 
-'''def dfs(list_nodes):
+def dfs_opt(list_nodes, cursol, curmin):
     sol = []
-    curmin = 100000 
-    cursol = []
-    if list_nodes != []:
+    #curmin = 100000 
+    #cursol = []
+    if list_nodes == []:
+        return cursol, curmin 
+    elif list_nodes != []:
         n = list_nodes[0]
         if cond.is_leaf(n):
         #compare to current min and replace if better, continue
@@ -103,17 +105,14 @@ def dfs(list_nodes):
             if ncross < curmin:
                 curmin = ncross
                 cursol = sol 
-            sol = dfs(list_nodes[1:])
+            return dfs_opt(list_nodes[1:], cursol, curmin)
         elif unfeasible(n):
-            sol = dfs(list_nodes[1:])
+            return dfs_opt(list_nodes[1:], cursol, curmin)
         else:
-            sol = dfs(expand(n)+list_nodes[1:])
-    else: 
-        return cursol
-    #return sol 
+            return dfs_opt(expand(n)+list_nodes[1:], cursol, curmin)
+         
         
- '''
-       
+
     
     
     
