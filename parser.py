@@ -41,7 +41,7 @@ def create_dataset(path):
 
 
 def write_solution(filename, list_B):
-    sol = open(filename, "a")
+    sol = open(test_dir + filename, "a")
     towrite = []
     for i in range(len(list_B)):
         towrite.append(str(list_B[i]) + "\n")

@@ -20,8 +20,8 @@ def solve(filename, output):
     g = c.Bipartite_graph(g, ordera, orderb)
     n = c.Node(g, cond.initialize_D(g))
     sol, m = dfs_opt([n], [], 100000)
-    return sol, m#list(nx.topological_sort(sol.digraph)) #sol
-    #parse.write_solution(output, sol)
+    #return sol, m#list(nx.topological_sort(sol.digraph)) #sol
+    parse.write_solution(output, sol)
     
 
 def algo(graph, orderA, orderB):
