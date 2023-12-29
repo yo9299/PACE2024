@@ -7,6 +7,7 @@ Created on Thu Dec 28 23:00:14 2023
 """
 import sys
 import algorithm as solver
+import time
 
 if len(sys.argv) < 2:
     print("Usage python3 script fileWithInputGraph")
@@ -15,8 +16,14 @@ if len(sys.argv) < 2:
 filename = sys.argv[1]
 #output = sys.argv[2]
 
+
 def main():
-    output = filename.split(".")[0] + ".sol"
-    solver.solve(filename, output)
+    #for filename in files:
+        tps=time.time()
+        out=filename.split("/")[2]
+        #out =filename.split(".")[-2]
+        output = out.split(".")[0] + ".sol"
+        solver.solve(filename, output)
+        print(time.time()-tps)
     
 main()

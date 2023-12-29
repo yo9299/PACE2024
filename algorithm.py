@@ -11,6 +11,7 @@ import parser as parse
 import sys
 import classes as c
 import crossings as cr
+import time
 
 sys. setrecursionlimit(100000)
 
@@ -23,32 +24,6 @@ def solve(filename, output):
     #return sol, m#list(nx.topological_sort(sol.digraph)) #sol
     parse.write_solution(output, sol)
     
-
-def algo(graph, orderA, orderB):
-    D = cond.initialize_D(graph, orderA, orderB)
-    print(D.edges)
-    
-    return recursion(graph, orderA, orderB, D,c)
-        
-
-def recursion(graph, orderA, orderB, D, c):
-    c +=1
-    tobeadded = cond.edges_to_be_added(graph, orderA, orderB, D)
-    print("D")
-    print(D.edges)
-    if tobeadded == []:
-        print("empty list:")
-        print(cond.solution_leaf(graph, orderA, orderB, D))
-        return cond.solution_leaf(graph, orderA, orderB, D)
-        print("should have returned sth")
-    else: 
-        e = tobeadded.pop() 
-        print(e)
-        node1, node2 = cond.branch(graph, orderA, orderB, D, e)
-        print("before recursion1")
-        recursion(graph, orderA,orderB, node1, c)
-        print("before recursion 2")
-        recursion(graph, orderA,orderB, node2, c)
         
        
 def branch(node, edge): #graph, orderA, orderB, D, edge):
@@ -60,14 +35,18 @@ def branch(node, edge): #graph, orderA, orderB, D, edge):
     node2.add_edges_from(list(node.digraph.edges))
     node2.add_edge(edge[1], edge[0])
     node2 = nx.transitive_closure_dag(node2)
+    
     return [c.Node(node.graph, node1), c.Node(node.graph, node2)]
 
 
  
-def expand(node):
+def expand(node, curmin):
+    #every time i branch, check that the cross number of node is smaller than curropt
     tobeadded = cond.edges_to_be_added(node)
     e = tobeadded.pop()
-    return branch(node, e)
+    new_nodes= branch(node, e)
+    sol = [i for i in new_nodes if compute_current_crossings(i)< curmin]
+    return new_nodes #sol
 #branch shoud return a node!
 
 def unfeasible(node):
@@ -76,8 +55,6 @@ def unfeasible(node):
 
 def dfs(list_nodes):
     sol = []
-    curmin = 100000 
-    cursol = []
     if list_nodes != []:
         n = list_nodes[0]
         if cond.is_leaf(n):
@@ -109,11 +86,19 @@ def dfs_opt(list_nodes, cursol, curmin):
         elif unfeasible(n):
             return dfs_opt(list_nodes[1:], cursol, curmin)
         else:
-            return dfs_opt(expand(n)+list_nodes[1:], cursol, curmin)
+            return dfs_opt(expand(n, curmin)+list_nodes[1:], cursol, curmin)
          
         
-
+def compute_current_crossings(node):
+    D = node.digraph 
+    sol = list(nx.topological_sort(D)) #only nodes in the edges
+    not_ordered = list(nx.isolates(D))
+    cursol = [ i for i in sol if i not in not_ordered ]
+    psol = [node.graph.orderB.index(i) for i in cursol]
+    value = cr.number_of_crossings(node.graph, psol)
+    return value
     
+   
     
     
      

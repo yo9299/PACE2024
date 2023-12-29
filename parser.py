@@ -3,10 +3,11 @@ from networkx.algorithms import bipartite
 import os 
 
 mypath = os.listdir("/home/vardevol/git/python/PACE2024/test/")
-test_dir = "/home/vardevol/git/python/PACE2024/test/"
+test_dir0 = "" #"/home/vardevol/git/python/PACE2024/test/"
+
 
 def parser(filename):
-    input_graph = open(test_dir + filename, 'r')
+    input_graph = open(test_dir0 + filename, 'r')
     lines = input_graph.readlines()
     input_graph.close()
     lines = [line.rstrip() for line in lines] 
@@ -39,8 +40,10 @@ def create_dataset(path):
         list_graphs.append(create_graph(file))
     return list_graphs
 
+test_dir = "/home/vardevol/git/python/PACE2024/test/"
 
 def write_solution(filename, list_B):
+    #print("should be writing in " + test_dir +filename)
     sol = open(test_dir + filename, "a")
     towrite = []
     for i in range(len(list_B)):
