@@ -65,10 +65,3 @@ def solution_leaf(g, D):
 
 initialNode= c.Node(c.initialGraph, initialize_D(c.initialGraph))
     
-#if to_explore is empty, then we are in a leaf node, otherwise, branch over two possible
-#edges and construct nx.transitive_closure_dag()
-    
-    
-
-    
-#create a dag with edges all the pairs obtained by is_suited_pair

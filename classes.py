@@ -3,6 +3,7 @@
 import networkx as nx
 import numpy as np
 
+#If I add the matrix of crossing cumbers as an attribute, it might optimize the code
 class Bipartite_graph:
     def __init__(self, graph, orderA, orderB):
         self.graph=graph

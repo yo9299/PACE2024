@@ -20,10 +20,13 @@ filename = sys.argv[1]
 def main():
     #for filename in files:
         tps=time.time()
-        out=filename.split("/")[2]
-        #out =filename.split(".")[-2]
+        directory = filename.split("/")[0:-1]
+        direct = "/".join(directory) + "/"
+        out=filename.split("/")[-1]
+        #print(out)
+        out =out.split(".")[-2]
         output = out.split(".")[0] + ".sol"
-        solver.solve(filename, output)
+        solver.solve(filename, str(direct) + str(output))
         print(time.time()-tps)
     
 main()

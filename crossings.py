@@ -9,6 +9,7 @@ G.add_edges_from([(1, 7), (2, 5), (3, 6), (4, 8)])
 orderA = [1,2,3,4]
 orderB = [8,6,5,7]
 #networkx graph and 2 arrays, one for the order of vertices in each side of bipartition
+
 def doEdgesCross(g, edge1, edge2):
     #input: g graph of class bipartite_graph, 2 edges as tuples
     (v0, v1) = edge1
@@ -34,8 +35,8 @@ def augmentA(g):
     A = g.get_adjacency_matrix()
     pA = np.zeros([g.nB, g.nA], dtype=np.int32)
     rA = np.zeros([g.nB, g.nA], dtype=np.int32)
-    l = []
-    r = []
+    l = np.zeros([g.nB],  dtype=np.int32) 
+    r = np.zeros([g.nB],  dtype=np.int32)
     for i in range(g.nB):
         for j in range(g.nA):
             k = j+1
@@ -50,8 +51,8 @@ def augmentA(g):
             else: 
                 pA[i][j] = int(g.nA +1)
             rA[i][j] = int(len(rnbs))
-        l.append(get_extreme_neighbors(g, g.orderB[i])[0])
-        r.append(get_extreme_neighbors(g, g.orderB[i])[1])
+        l[i] = get_extreme_neighbors(g, g.orderB[i])[0] 
+        r[i] = get_extreme_neighbors(g, g.orderB[i])[1]
     return pA, rA, l , r
 
 #does not work
@@ -69,9 +70,9 @@ def compute_crossing_numbers(g):
                 c[v][w] = cvw
     return c
 
-#solution is given as a permutation of 0123 which represents the input ordering ie 5768
-def number_of_crossings(g, solB):
-    c = compute_crossing_numbers(g)
+#solution is given as a permutation of 0123 which represents the input ordering ie 5768, call it with indices!
+def number_of_crossings(g, c, solB):
+    #c = compute_crossing_numbers(g)
     sol = 0
     for i in range(len(solB)):
         for j in range(i+1, len(solB)):
@@ -79,35 +80,3 @@ def number_of_crossings(g, solB):
     return sol 
             
     
-
-'''   
-def numberOfCrossingsExp(Graph, orderA, orderB):
-    edges = list(Graph.edges) 
-    counter = 0
-    for e in range(len(edges)):
-        for j in range(e,len(edges)):
-            if doEdgesCross(orderA, orderB, edges[e], edges[j]):
-                counter += 1
-    return counter 
-
-#this is wrong    
-def crossing_number(g, v, w):
-    edges= g.edges
-    counter= 0
-    fedges = [e for e in edges if (e[1]== v or e[1] == w)]
-
-    if g.orderB.index(v) < g.orderB.index(w):
-        for i in range(len(fedges)):
-            for j in range(i,len(fedges)):
-                if doEdgesCross(g, fedges[i], fedges[j]):
-                    counter +=1
-    return  counter
-
-
-def numberOfCrossings(g):
-    sum=0
-    for i in range(len(g.orderB)):
-        for j in range(i, len(g.orderB)):
-            sum += crossing_number(g, g.orderB[i], g.orderB[j])
-    return sum
-'''

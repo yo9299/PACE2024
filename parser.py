@@ -24,6 +24,7 @@ def parser(filename):
         l_edges.append((int(e[0]), int(e[1])))
     return n_a, n_b, n_edges, l_edges
     
+#maybe create directly a directed graph
 def create_graph(filename):
     n_a, n_b, n_edges, edges = parser(filename)
     G = nx.DiGraph()
@@ -40,7 +41,7 @@ def create_dataset(path):
         list_graphs.append(create_graph(file))
     return list_graphs
 
-test_dir = "/home/vardevol/git/python/PACE2024/test/"
+test_dir = "" # "/home/vardevol/git/python/PACE2024/test/"
 
 def write_solution(filename, list_B):
     #print("should be writing in " + test_dir +filename)
