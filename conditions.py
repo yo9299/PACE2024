@@ -48,7 +48,7 @@ def initialize_D(g):
 def edges_to_be_added(n):
     g= n.graph
     D = n.digraph
-    C = initialize_C(n.graph)
+    C = initialize_C(n.graph) #I should not compute this each time
     to_explore = []
     for i in range(len(g.orderB)):
         for j in range(i+1, len(g.orderB)):

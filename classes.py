@@ -21,12 +21,14 @@ class Bipartite_graph:
                     A[i][j] = 1
         return A
  
+#Cij and C should be attributes of node    
 class Node:
     def __init__(self, graph, digraph):
         self.graph=graph
         self.digraph=digraph
         self.orderA = graph.orderA 
         self.orderB= graph.orderB
+        #self.partialSol
         
   
 #cycle_8_shffled

@@ -44,6 +44,7 @@ def unfeasible(node):
       
 def expand(node,Cij, curmin):
     tobeadded = cond.edges_to_be_added(node)
+    #instead of pop, choose the one who has a lowest cij A* with this heuristic? admissible?
     e = tobeadded.pop()
     new_nodes= branch(node, e)
     sol = [i for i in new_nodes if compute_current_crossings(i, Cij)< curmin]

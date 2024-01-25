@@ -55,7 +55,6 @@ def augmentA(g):
         r[i] = get_extreme_neighbors(g, g.orderB[i])[1]
     return pA, rA, l , r
 
-#does not work
 def compute_crossing_numbers(g):
     pA, rA, l, r = augmentA(g)
     c = np.zeros([g.nB, g.nB], dtype=np.int32)
