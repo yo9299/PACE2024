@@ -11,6 +11,7 @@ import parser as parse
 import sys
 import classes as c
 import crossings as cr
+import astar as a 
 
 sys. setrecursionlimit(100000)
 
@@ -21,7 +22,6 @@ def solve(filename, output):
     n = c.Node(g, cond.initialize_D(g))
     Cij = cr.compute_crossing_numbers(g)
     sol, m = dfs_opt([n],Cij, [], 100000)
-    #return sol, m#list(nx.topological_sort(sol.digraph)) #sol
     parse.write_solution(output, sol)
     
         
@@ -60,7 +60,8 @@ def dfs_opt(list_nodes, Cij, cursol, curmin):
     if list_nodes == []:
         return cursol, curmin 
     elif list_nodes != []:
-        n = list_nodes[0]
+        #aqui en vez de coger el primer node, coger el que de menor evaluation(node)
+        n = a.find_best(list_nodes, Cij)#list_nodes[0]
         if cond.is_leaf(n):
         #compare to current min and replace if better, continue
             sol = list(nx.topological_sort(n.digraph))
@@ -73,6 +74,7 @@ def dfs_opt(list_nodes, Cij, cursol, curmin):
         elif unfeasible(n):
             return dfs_opt(list_nodes[1:], Cij, cursol, curmin)
         else:
+            #aqui hay que expandir el nodo que 
             return dfs_opt(expand(n, Cij, curmin)+list_nodes[1:], Cij, cursol, curmin)
          
         

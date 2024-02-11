@@ -28,12 +28,22 @@ def cost(node, Cij):
 def heuristic(node, Cij):
     tobeadded = cond.edges_to_be_added(node)
     choices = []
+    curmin = 0
+    #filter so that only one directed edge appears. 
+    #compute min Cij[]
     for (i,j) in tobeadded:
-        if (i,j) not in choices and (j,i) not in choice:
+        if (i,j) not in choices and (j,i) not in choices:
             choices.append((i,j))
     for e in choices:
-        node.
+        curmin += min(Cij[e[0]][e[1]], Cij[e[1]][e[0]])
+    return curmin 
 
     
 def evaluation(node, Cij):
     return cost(node, Cij) + heuristic(node,Cij)
+
+def find_best(list_nodes,Cij):
+    nodes_d = dict.fromkeys(list_nodes)
+    for n in list_nodes:
+        nodes_d[n]=evaluation(n, Cij)
+    return min(nodes_d, key=nodes_d.get)
