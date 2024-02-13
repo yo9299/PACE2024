@@ -26,6 +26,7 @@ def cost(node, Cij):
     return solver.compute_current_crossings(node, Cij)
 
 def heuristic(node, Cij):
+    g = node.graph
     tobeadded = cond.edges_to_be_added(node)
     choices = []
     curmin = 0
@@ -35,7 +36,7 @@ def heuristic(node, Cij):
         if (i,j) not in choices and (j,i) not in choices:
             choices.append((i,j))
     for e in choices:
-        curmin += min(Cij[e[0]][e[1]], Cij[e[1]][e[0]])
+        curmin += min(Cij[g.orderB.index(e[0])][g.orderB.index(e[1])], Cij[g.orderB.index(e[1])][g.orderB.index(e[0])])
     return curmin 
 
     
