@@ -19,9 +19,9 @@ sys. setrecursionlimit(100000)
 def solve(filename, output):
     g, ordera, orderb = parse.create_graph(filename)
     g = c.Bipartite_graph(g, ordera, orderb)
-    n = c.Node(g, cond.initialize_D(g))
-    Cij = cr.compute_crossing_numbers(g)
-    sol, m = dfs_opt([n],Cij, [], cr.number_of_crossings(g,Cij,mean.upper_bound(g)))
+    #n = c.Node(g, cond.initialize_D(g))
+    #Cij = cr.compute_crossing_numbers(g)
+    sol= mean.upper_bound(g) #, cr.number_of_crossings(g,Cij,mean.upper_bound(g)) # dfs_opt([n],Cij, [], cr.number_of_crossings(g,Cij,mean.upper_bound(g)))
     #return sol, m#list(nx.topological_sort(sol.digraph)) #sol
     parse.write_solution(output, sol)
     
