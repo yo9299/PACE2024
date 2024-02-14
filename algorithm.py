@@ -24,7 +24,7 @@ def solve(filename, output):
     sol= dfs_opt([n],Cij, mean.upper_bound_sol(g), cr.number_of_crossings(g,Cij,mean.upper_bound_ind(g)))
     #return sol, m#list(nx.topological_sort(sol.digraph)) #sol
     
-    print(sol[0])
+    #print(sol[0])
     parse.write_solution(output, sol[0])
     
         
