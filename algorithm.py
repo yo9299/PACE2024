@@ -21,9 +21,11 @@ def solve(filename, output):
     g = c.Bipartite_graph(g, ordera, orderb)
     n = c.Node(g, cond.initialize_D(g))
     Cij = cr.compute_crossing_numbers(g)
-    sol= dfs_opt([n],Cij, [], cr.number_of_crossings(g,Cij,mean.upper_bound(g)))
+    sol= dfs_opt([n],Cij, [], 10000000) # cr.number_of_crossings(g,Cij,mean.upper_bound(g)))
     #return sol, m#list(nx.topological_sort(sol.digraph)) #sol
-    parse.write_solution(output, sol)
+    
+    print(sol[0])
+    parse.write_solution(output, sol[0])
     
         
        
