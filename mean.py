@@ -16,6 +16,7 @@ def upper_bound_sol(input_graph):
         for n in list(g.predecessors(v)): # 
             vector += input_graph.orderA.index(n)
         scores[v] =( vector/g.degree[v])
+        print(scores)
     #no hay que devolver los indices
     sortedsol = sorted(scores, key=scores.get)
     #print(sortedsol)
